@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "message": "Opportunity comes everytime",
+    "luckyNumber": 12,
+    "spiritAnimal": "cat"
+  },
+  {
+    "id": 2,
+    "message": "Love might be somewhere closer than you think",
+    "luckyNumber": 7,
+    "spiritAnimal": "dog"
+  },
+  {
+    "id": 3,
+    "message": "You can do it as long as you think you can do it",
+    "luckyNumber": 4,
+    "spiritAnimal": "fox"
+  },
+  {
+    "id": 4,
+    "message": "If you fail to plan, you are planning to fail",
+    "luckyNumber": 47,
+    "spiritAnimal": "elephant"
+  }
+]
