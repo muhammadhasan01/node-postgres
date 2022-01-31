@@ -40,17 +40,13 @@ app.post('/fortunes', (req, res) => {
 
 app.put('/fortunes/:id', (req, res) => {
   const {id} = req.params;
-  const {message, luckyNumber, spiritAnimal} = req.body;
   const oldFortune = fortunes.find(f => f.id === Number(id));
-  if (message) {
-    oldFortune.message = message;
-  }
-  if (luckyNumber) {
-    oldFortune.luckyNumber = luckyNumber;
-  }
-  if (spiritAnimal) {
-    oldFortune.spiritAnimal = spiritAnimal;
-  }
+  ['message', 'luckyNumber', 'spiritAnimal'].forEach((key) => {
+    const value = req.body[key];
+    if (value) {
+      oldFortune[key] = value;
+    }
+  });
   writeFortunes(fortunes);
   res.json(fortunes);
 });
