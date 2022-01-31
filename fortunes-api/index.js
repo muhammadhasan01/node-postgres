@@ -51,6 +51,13 @@ app.put('/fortunes/:id', (req, res) => {
   res.json(fortunes);
 });
 
+app.delete('/fortunes/:id', (req, res) => {
+  const {id} = req.params;
+  const newFortunes = fortunes.filter(f => f.id !== Number(id));
+  writeFortunes(newFortunes);
+  res.json(newFortunes);
+})
+
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
 });
