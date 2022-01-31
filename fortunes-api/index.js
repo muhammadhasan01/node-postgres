@@ -34,7 +34,22 @@ app.post('/fortunes', (req, res) => {
   const fortuneId = fortuneIds.length > 0 ? Math.max(...fortuneIds) + 1 : 0;
   const fortune = {id: fortuneId, message, luckyNumber, spiritAnimal};
   const newFortunes = fortunes.concat(fortune);
-  writeFortunes(fortunes);
+  writeFortunes(newFortunes);
+  res.send(newFortunes);
+});
+
+app.post('/fortunes/multiple', (req, res) => {
+  const fortuneReq = req.body;
+  let newFortunes = fortunes;
+  const fortuneIds = fortunes.map(f => f.id);
+  const maxId = Math.max(...fortuneIds);
+  for (let i = 0; i < fortuneReq.length; i++) {
+    const {message, luckyNumber, spiritAnimal} = fortuneReq[i];
+    const fortuneId = fortuneIds.length > 0 ? maxId + i + 1 : 0;
+    const fortune = {id: fortuneId, message, luckyNumber, spiritAnimal};
+    newFortunes.push(fortune);
+  }
+  writeFortunes(newFortunes);
   res.send(newFortunes);
 });
 
@@ -56,7 +71,13 @@ app.delete('/fortunes/:id', (req, res) => {
   const newFortunes = fortunes.filter(f => f.id !== Number(id));
   writeFortunes(newFortunes);
   res.json(newFortunes);
-})
+});
+
+app.delete('/fortunes', (req, res) => {
+  const newFortunes = []
+  writeFortunes(newFortunes);
+  res.json(newFortunes);
+});
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
