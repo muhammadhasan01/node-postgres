@@ -14,6 +14,12 @@ app.get('/fortunes/random', (req, res) => {
   res.json(randomFortune);
 })
 
+app.get('/fortunes/:id', (req, res) => {
+  const {id} = req.params;
+  const fortune = fortunes.find(f => f.id === Number(id));
+  res.json(fortune);
+})
+
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
 });
