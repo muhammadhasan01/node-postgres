@@ -43,7 +43,7 @@ app.put('/fortunes/:id', (req, res) => {
   const oldFortune = fortunes.find(f => f.id === Number(id));
   ['message', 'luckyNumber', 'spiritAnimal'].forEach((key) => {
     const value = req.body[key];
-    if (value) {
+    if (value || value === 0) {
       oldFortune[key] = value;
     }
   });
