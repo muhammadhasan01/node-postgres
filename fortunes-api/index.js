@@ -24,15 +24,36 @@ app.get('/fortunes/:id', (req, res) => {
   res.json(fortune);
 });
 
+const writeFortunes = (json) => {
+  fs.writeFile('./data/fortunes.json', JSON.stringify(json), err => console.log(err));
+};
+
 app.post('/fortunes', (req, res) => {
   const {message, luckyNumber, spiritAnimal} = req.body;
   const fortuneIds = fortunes.map(f => f.id);
   const fortuneId = fortuneIds.length > 0 ? Math.max(...fortuneIds) + 1 : 0;
   const fortune = {id: fortuneId, message, luckyNumber, spiritAnimal};
   const newFortunes = fortunes.concat(fortune);
-  fs.writeFile('./data/fortunes.json', JSON.stringify(newFortunes), err => console.log(err));
+  writeFortunes(fortunes);
   res.send(newFortunes);
-})
+});
+
+app.put('/fortunes/:id', (req, res) => {
+  const {id} = req.params;
+  const {message, luckyNumber, spiritAnimal} = req.body;
+  const oldFortune = fortunes.find(f => f.id === Number(id));
+  if (message) {
+    oldFortune.message = message;
+  }
+  if (luckyNumber) {
+    oldFortune.luckyNumber = luckyNumber;
+  }
+  if (spiritAnimal) {
+    oldFortune.spiritAnimal = spiritAnimal;
+  }
+  writeFortunes(fortunes);
+  res.json(fortunes);
+});
 
 app.listen(port, () => {
   console.log(`Listening on Port ${port}`);
